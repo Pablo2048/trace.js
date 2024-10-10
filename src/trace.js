@@ -29,7 +29,11 @@
     const ENABLED_MODULES = window.ENABLED_MODULES || [];
 
     function getTimestamp() {
-        return new Date().toISOString();
+        const now = new Date();
+        const offset = -now.getTimezoneOffset();
+        const pad = num => String(num).padStart(2, '0');
+
+        return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}.${String(now.getMilliseconds()).padStart(3, '0')}${offset >= 0 ? '+' : '-'}${pad(Math.floor(Math.abs(offset) / 60))}:${pad(Math.abs(offset) % 60)}`;
     }
 
     function getCurrentScriptName() {
